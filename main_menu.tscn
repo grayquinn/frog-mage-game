@@ -1,0 +1,148 @@
+[gd_scene load_steps=11 format=3 uid="uid://pxp32himaq1g"]
+
+[ext_resource type="Texture2D" uid="uid://dr4s1bjachl5b" path="res://ChatGPT Image Jun 21, 2025, 03_51_44 PM.png" id="1_06t4h"]
+[ext_resource type="Script" uid="uid://cgcv05t37fks6" path="res://menu_ui.gd" id="2_fu7sn"]
+[ext_resource type="AudioStream" uid="uid://b16h052tv2foe" path="res://dark_piano_chord_reverb.ogg" id="3_jix8l"]
+[ext_resource type="AudioStream" uid="uid://d0nec8ga110in" path="res://somber_soft_piano_loop.ogg" id="4_jix8l"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_06t4h"]
+bg_color = Color(0.666667, 0.666667, 0.666667, 0.333333)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7vrkn"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fu7sn"]
+bg_color = Color(0.666667, 0.666667, 0.666667, 0.333333)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jix8l"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glbon"]
+bg_color = Color(0.666667, 0.666667, 0.666667, 0.333333)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nlkkf"]
+bg_color = Color(0, 0, 0, 0)
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(768, 512)
+texture = ExtResource("1_06t4h")
+
+[node name="UIRoot" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuUI" type="Control" parent="UIRoot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 368.0
+offset_top = 280.0
+offset_right = 1064.0
+offset_bottom = 896.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_fu7sn")
+
+[node name="ExitButton" type="Button" parent="UIRoot/MenuUI"]
+layout_mode = 1
+offset_left = 176.0
+offset_top = 408.0
+offset_right = 496.0
+offset_bottom = 512.0
+theme_type_variation = &"FlatButton"
+theme_override_styles/hover = SubResource("StyleBoxFlat_06t4h")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7vrkn")
+
+[node name="StartGame" type="Button" parent="UIRoot/MenuUI"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 48.0
+offset_right = 632.0
+offset_bottom = 136.0
+theme_override_styles/hover = SubResource("StyleBoxFlat_fu7sn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jix8l")
+
+[node name="Options" type="Button" parent="UIRoot/MenuUI"]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 256.0
+offset_right = 496.0
+offset_bottom = 360.0
+theme_override_styles/hover = SubResource("StyleBoxFlat_glbon")
+theme_override_styles/normal = SubResource("StyleBoxFlat_nlkkf")
+
+[node name="OptionsMenu" type="Control" parent="UIRoot/MenuUI/Options"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Audio Volume" type="Label" parent="UIRoot/MenuUI/Options/OptionsMenu"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="AudioSlider" type="HSlider" parent="UIRoot/MenuUI/Options/OptionsMenu"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 16.0
+
+[node name="Brightness Slider" type="Label" parent="UIRoot/MenuUI/Options/OptionsMenu"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="BrightnessSlider" type="HSlider" parent="UIRoot/MenuUI/Options/OptionsMenu"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 16.0
+
+[node name="SaveButton" type="Button" parent="UIRoot/MenuUI/Options/OptionsMenu"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Save"
+
+[node name="BackButton" type="Button" parent="UIRoot/MenuUI/Options/OptionsMenu"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Back
+	"
+
+[node name="ButtonSound" type="AudioStreamPlayer2D" parent="UIRoot/MenuUI"]
+stream = ExtResource("3_jix8l")
+area_mask = 259
+
+[node name="ExitDialog" type="ConfirmationDialog" parent="UIRoot/MenuUI"]
+dialog_text = "Do you wish to Exit? 
+
+"
+
+[node name="MenuAudio" type="AudioStreamPlayer2D" parent="UIRoot"]
+stream = ExtResource("4_jix8l")
+volume_db = -1.106
+pitch_scale = 0.65
+autoplay = true
+playback_type = 1
+parameters/looping = false
+
+[node name="MainMenuCamera" type="Camera2D" parent="."]
+position = Vector2(768, 512)
+
+[connection signal="pressed" from="UIRoot/MenuUI/ExitButton" to="UIRoot/MenuUI" method="_on_exit_button_pressed"]
+[connection signal="pressed" from="UIRoot/MenuUI/StartGame" to="UIRoot/MenuUI" method="_on_start_game_pressed"]
+[connection signal="pressed" from="UIRoot/MenuUI/Options" to="UIRoot/MenuUI" method="_on_options_pressed"]
+[connection signal="confirmed" from="UIRoot/MenuUI/ExitDialog" to="UIRoot/MenuUI" method="_on_confirmation_dialog_confirmed"]
